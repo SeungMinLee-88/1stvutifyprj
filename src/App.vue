@@ -57,7 +57,7 @@
       ></v-pagination>
 
       <MainComp :userList=userList
-      :page=page
+      :currentPage=currentPage
       :pageLength=pageLength
       @pageClick="pageClick"
       :modelValue="foo"
@@ -123,7 +123,7 @@ onMounted(() => {
   const pageClick = (page) => {
     console.log("1st page :  "  + page)
     currentPage.value = page;
-    //getData();
+    getData();
   //alert('1')
   }
   const selectFiled = (selectSearchFiled) => {

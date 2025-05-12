@@ -2,23 +2,23 @@
   import { ref, onMounted, shallowRef  } from 'vue'
 
 
-const props = defineProps(['userList', 'page', 'pageLength'])
+const props = defineProps(['userList', 'currentPage', 'pageLength'])
 
-const propPage = ref(props.page);
+const propPage = ref(props.currentPage);
 const propPageLength = ref(props.pageLength);
 
 
 const emit = defineEmits(['mainPageClick'])
 
-function handleClick(page) {
-console.log("page : " + page)
-emit('mainPageClick', page);
+function handleClick(pageVal) {
+console.log("pageVal : " + pageVal)
+emit('mainPageClick', pageVal);
 }
   </script>
 <template>
-  {{props.userList}}
+<!--   {{props.userList}}
   page : {{props.page}}
-  pageLength : {{props.pageLength}}
+  pageLength : {{props.pageLength}} -->
   <v-table>
     <thead>
       <tr>
@@ -39,7 +39,7 @@ emit('mainPageClick', page);
     </v-table>
 
    <v-pagination
-        v-model="props.page"
+        v-model="props.currentPage"
         :length="props.pageLength"
         rounded="circle"
         @update:model-value="handleClick"

@@ -3,21 +3,14 @@
     <v-card flat>
     <SearchBar />
     <UserList :userList=userList
-      :page=page
+      :currentPage=currentPage
       :pageLength=pageLength
+      @mainPageClick="mainPageClick"
     />
   </v-card>
-  {{page}}
+  {{currentPage}}
   {{pageLength}}
   </div>
-  <v-pagination
-        v-model="page"
-        :length="5"
-        rounded="circle"
-        @mainPageClick="mainPageClick"
-      ></v-pagination>
-
-
       <input
     :value="props.modelValue"
     @input="$emit('update:modelValue', $event.target.value)"
@@ -25,10 +18,10 @@
 </template>
 
 <script setup>
-  const pageClick = (page) => {
-    console.log("2nd page :  "  + page)
-    currentPage.value = page;
-    emit('pageClick', page);
+const emit = defineEmits(['pageClick', 'update:modelValue'])
+  const mainPageClick = (pageVal) => {
+    console.log("2nd pageVal :  "  + pageVal)
+    emit('pageClick', pageVal);
     //getData();
   //alert('1')
   }
@@ -40,7 +33,7 @@ import UserList from './UserList.vue'
 
 const page = ref(1)
 
-const props = defineProps(['userList', 'page', 'pageLength', 'modelValue'])
+const props = defineProps(['userList', 'currentPage', 'pageLength', 'modelValue'])
 /* const emit = defineEmits(['update:modelValue']) */
 
 
