@@ -1,4 +1,6 @@
 <template>
+    <div class="container">
+      <v-card flat>
  <v-card-title class="d-flex align-center pe-2">
   <v-spacer></v-spacer>
       <v-select
@@ -13,24 +15,46 @@
       @update:modelValue="selectFiled"
       ></v-select>
 
-    <v-text-field
-      v-model="search"
-      density="compact"
-      label="Search"
-      prepend-inner-icon="mdi-magnify"
-      variant="underlined"
-      flat
-      hide-details
-      single-line
-       @update:modelValue="inputSearch"
-    ></v-text-field>
-
+    <v-card-text>
+      <v-text-field
+        :loading="loading"
+        append-inner-icon="mdi-magnify"
+        density="compact"
+        label="Search templates"
+        variant="solo"
+        hide-details
+        single-line
+        @click:append-inner="userSearch"
+        @update:modelValue="inputSearch"
+        @userSearch="userSearch"
+      ></v-text-field>
+    </v-card-text>
 </v-card-title>
 <v-divider></v-divider>
+</v-card>
+  </div>
 </template>
 
 <script setup>
-  import { ref, onMounted, shallowRef  } from 'vue'
+import { ref, onMounted, shallowRef  } from 'vue'
+const emit = defineEmits(['pageClick', 'selectFiled', 'inputSearch'])
+
 const model = shallowRef('')
 const items = [{title: 'Id', value: "loginId"}, {title: 'Name', value: "userName"}];
+
+const selectFiled = (selectSearchFiled) => {
+    console.log("3rd selectSearchFiled :  "  + selectSearchFiled)
+    emit('selectFiled', selectSearchFiled);
+  }
+
+  const inputSearch = (inputSearch) => {
+    console.log("3rd inputSearch :  "  + inputSearch)
+    emit('inputSearch', inputSearch);
+  }
+
+  const userSearch = () => {
+    console.log("3rd userSearch :  ")
+    emit('userSearch');
+  }
+
 </script>

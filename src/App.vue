@@ -1,67 +1,14 @@
 <template>
-  <v-card flat>
-    <v-card-title class="d-flex align-center pe-2">
-  <v-spacer></v-spacer>
-      <v-select
-        v-model="model"
-        :items="items"
-        width="10"
-        density="compact"
-      label="Search"
-      prepend-inner-icon="mdi-magnify"
-      variant="underlined"
-        flat
-      hide-details
-      single-line
-      @update:modelValue="selectFiled"
-      ></v-select>
-
-    <v-text-field
-      v-model="search"
-      density="compact"
-      label="Search"
-      prepend-inner-icon="mdi-magnify"
-      variant="underlined"
-      flat
-      hide-details
-      single-line
-       @update:modelValue="inputSearch"
-    ></v-text-field>
-
-</v-card-title>
-<v-divider></v-divider>
-  <v-table>
-    <thead>
-      <tr>
-        <th class="text-left">NUM</th>
-        <th class="text-left">ID</th>
-        <th class="text-left">NAME</th>
-        <th class="text-left">ROLE</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(users, index) in userList" :key="users.id">
-        <td>{{ index }}</td>
-        <td>{{ users.loginId }}</td>
-        <td>{{ users.userName }}</td>
-        <td>{{ users.roleUserSave }}</td>
-      </tr>
-    </tbody>
-    </v-table>
-  </v-card>
-   <v-pagination
-        v-model="page"
-        :length="pageLength"
-        rounded="circle"
-        @update:model-value="pageClick"
-      ></v-pagination>
 
       <MainComp :userList=userList
       :currentPage=currentPage
       :pageLength=pageLength
       @pageClick="pageClick"
-      :modelValue="foo"
-      @update:modelValue="$event => (foo = $event)"
+      @selectFiled="selectFiled"
+      @inputSearch="inputSearch"
+      :searchFiled="searchFiled"
+      :searchTxt="searchTxt"
+      @userSearch="userSearch"
       />
       {{ foo }}
   </template>
@@ -124,22 +71,19 @@ onMounted(() => {
     console.log("1st page :  "  + page)
     currentPage.value = page;
     getData();
-  //alert('1')
   }
   const selectFiled = (selectSearchFiled) => {
     console.log("selectSearchFiled :  "  + selectSearchFiled);
     searchFiled.value = selectSearchFiled;
-    getData();
-
-  //alert('1')
   }
-
   const inputSearch = (inputSearchTxt) => {
     console.log("inputSearchTxt :  "  + inputSearchTxt)
     searchTxt.value = inputSearchTxt;
-    getData();
-
   //alert('1')
+  }
+
+  const userSearch = () => {
+    getData();
   }
 const model = shallowRef('')
 
