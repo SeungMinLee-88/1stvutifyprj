@@ -2,13 +2,13 @@
   import { ref, onMounted, shallowRef  } from 'vue'
 
 
-const props = defineProps(['userList', 'currentPage', 'pageLength'])
+const props = defineProps(['userList', 'currentPage', 'pageLength', 'showModal'])
 
 const propPage = ref(props.currentPage);
 const propPageLength = ref(props.pageLength);
 
 
-const emit = defineEmits(['mainPageClick'])
+const emit = defineEmits(['mainPageClick', 'showModalPop'])
 
 function handleClick(pageVal) {
 console.log("pageVal : " + pageVal)
@@ -16,13 +16,16 @@ emit('mainPageClick', pageVal);
 }
 
 function modifyPopup(userId) {
-alert('modifyPopup userId : ' + userId);
+alert('modifyPopup props.showModal : ' + props.showModal);
+
+emit('showModalPop', true);
 }
   </script>
 <template>
   {{props.userList}}
 <!--   page : {{props.page}}
   pageLength : {{props.pageLength}} -->
+  showModal userList : {{showModal}}
   <v-table>
     <thead>
       <tr>

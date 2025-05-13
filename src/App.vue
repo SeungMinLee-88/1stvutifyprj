@@ -8,25 +8,39 @@
       @inputSearch="inputSearch"
       :searchFiled="searchFiled"
       :searchTxt="searchTxt"
+      :showModal="showModal"
       @userSearch="userSearch"
+      @showModalPop="showModalPop"
       />
-      {{ foo }}
+
+      <div id="app">
+  <p>{{ count }}</p>
+  <p>
+    <button @click="store.increment">+</button>
+    <button @click="store.decrement">-</button>
+  </p>
+</div>
+
   </template>
 
 <script setup>
   import { ref, onMounted, shallowRef  } from 'vue'
   import Axios from "axios";
-  import{ selected, headers, desserts } from './assets/tempdata.js'
+  import { useStore } from 'vuex'
+
 import MainComp from './components/MainComp.vue'
 import MyButton from './components/MyButton.vue'
 const foo = ref("test")
 
 const msg = ref('Hello World!')
+const store = useStore()
 
   const page = ref(1)
   const count = ref(1)
-  function increaseCount(n) {
-  count.value += n
+  const showModal = ref(false)
+  function showModalPop(showModalVal) {
+    console.log("1st showModalVal :  "  + showModalVal)
+    showModal.value = showModalVal;
 }
 
   const userList = ref([]);

@@ -9,13 +9,15 @@
     <UserList :userList=userList
       :currentPage=currentPage
       :pageLength=pageLength
+      :showModal="showModal"
       @mainPageClick="mainPageClick"
+      @showModalPop="showModalPop"
     />
     <ModifyModal
-    :showModal="false"/>
+    :showModal="showModal"/>
 
   </v-card>
-  {{currentPage}}
+  showModal : {{showModal}}
   {{pageLength}}
   </div>
 </template>
@@ -34,7 +36,13 @@ console.log("pageVal : " + pageVal)
 emit('mainPageClick', pageVal);
 }
 
-const emit = defineEmits(['pageClick', 'selectFiled', 'inputSearch'])
+const emit = defineEmits(['pageClick', 'selectFiled', 'inputSearch', 'showModalPop'])
+const showModalPop = (showModalVal) => {
+    console.log("2nd showModalPop :  "  + showModalVal)
+    emit('showModalPop', showModalVal);
+    //getData();
+  //alert('1')
+  }
 
 
 const selectFiled = (selectSearchFiled) => {
@@ -65,7 +73,7 @@ const selectFiled = (selectSearchFiled) => {
 
 const page = ref(1)
 
-const props = defineProps(['userList', 'currentPage', 'pageLength', 'modelValue', 'searchFiled', 'searchTxt'])
+const props = defineProps(['userList', 'currentPage', 'pageLength', 'modelValue', 'searchFiled', 'searchTxt', 'showModal'])
 /* const emit = defineEmits(['update:modelValue']) */
 
 </script>
