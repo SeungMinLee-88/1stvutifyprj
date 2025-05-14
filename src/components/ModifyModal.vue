@@ -50,7 +50,7 @@ ModifyModal Popup Page
         color="primary"
       >
 
-
+      <!-- https://vuetifyjs.com/en/components/lists/#density -->
         <v-list-item-title v-text="role.roleName"></v-list-item-title>
         <template v-slot:append>
           <v-icon icon="mdi-close" @click="handleRemove(role.roleId)"></v-icon>
