@@ -10,7 +10,6 @@
       :currentPage=currentPage
       :pageLength=pageLength
       @mainPageClick="mainPageClick"
-      @showModalPop="showModalPop"
     />
     <ModifyModal
     :showModal="$store.state.showModal"/>

@@ -8,7 +8,6 @@
       @inputSearch="inputSearch"
       :searchFiled="searchFiled"
       :searchTxt="searchTxt"
-      :showModal="showModal"
       @userSearch="userSearch"
       @showModalPop="showModalPop"
       />
@@ -16,7 +15,7 @@
       <div id="app">
         <div>
   <p>store.state.showModalVal : {{ store.state.showModal }}</p>
-  <p>store.state.userId : {{ store.state.userId }}</p>
+
 </div>
 </div>
 
@@ -30,14 +29,8 @@
 import MainComp from './components/MainComp.vue'
 import MyButton from './components/MyButton.vue'
 
-const resolve = () => {
-        console.log("actionA complete")
-      }
 const store = useStore()
 
-function increment () {
-      store.commit('increment')
-    }
 
 
   const page = ref(1)
@@ -82,6 +75,7 @@ await Axios.get("http://localhost:8090/api/v1/user/userList", {
 onMounted(() => {
   /* Promise.resolve(getData()).then((data) => (userList.value = data)); */
   getData();
+  store.dispatch('getUserData')
   console.log("call onMounted");
 })
 
@@ -99,23 +93,81 @@ onMounted(() => {
     searchTxt.value = inputSearchTxt;
   //alert('1')
   }
-
   const userSearch = () => {
     getData();
   }
-const model = shallowRef('')
 
-const items = [{title: 'Id', value: "loginId"}, {title: 'Name', value: "userName"}];
-/* const items = [
-  {
-    title: 'Id',
-    subtitle: 'loginId',
-  },
-  {
-    title: 'Name',
-    subtitle: 'Name',
-  },
-] */
-
-const search = ref();
   </script>
+
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+h1,
+h2,
+h3 {
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 0.5rem;
+}
+
+button {
+  margin-right: 10px;
+  margin-top: 1rem;
+}
+
+.item {
+  width: 100%;
+  border: 1px solid #ccc;
+  display: flex;
+  margin-bottom: 20px;
+  padding: 1rem;
+}
+
+.item figure {
+  width: 30%;
+  margin-right: 1rem;
+}
+
+.item img {
+  width: 100%;
+}
+
+.item .info {
+  width: 100%;
+}
+
+.modal {
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal .inner {
+  background: #fff;
+  width: 80%;
+  height: 80%;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+p:has(.btn-all) {
+  text-align: center;
+}
+</style>

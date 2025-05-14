@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import Axios from "axios";
 /*     async incrementA (state) {
       console.log("call incrementA")
       console.log("before state.count : " + state.count)
@@ -15,8 +16,10 @@ export const store = new Vuex.Store({
   state: {
       count: 0,
       count2: 10,
-      showModal: false,
-      userId: 0
+      showModal: true,
+      userId: 0,
+      userDetail: []
+
   },
   mutations: {
 
@@ -34,6 +37,19 @@ export const store = new Vuex.Store({
   }
   },
   actions: {
+    async getUserData ({ state, commit }) {
+      await Axios.post("http://localhost:8090/api/v1/user/userDetail", {
+          /* id: state.userId */
+          id: 2
+
+      }).then((response) => {
+        console.log("getUserData : " + JSON.stringify(response.data));
+
+        state.userDetail = response.data;
+      }).catch(function (error) {
+        console.log("error : " + error)
+      });
+    }
 
   }
 });

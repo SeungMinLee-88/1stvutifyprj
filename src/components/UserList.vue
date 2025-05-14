@@ -15,11 +15,6 @@ console.log("pageVal : " + pageVal)
 emit('mainPageClick', pageVal);
 }
 
-function modifyPopup(userId) {
-alert('modifyPopup props.showModal : ' + props.showModal);
-
-emit('showModalPop', true);
-}
 /*   import { useStore } from 'vuex'
 const store = useStore()
 function increment () {
@@ -55,7 +50,7 @@ function increment () {
         <td>{{ users.id }} | {{ users.loginId }}</td>
         <td>{{ users.userName }}</td>
         <td>
-          <ol>
+        <ol>
           <li v-for="role in users.roleUser">
             {{ role.roleName }}
           </li>
@@ -64,7 +59,7 @@ function increment () {
         <td><v-btn color="#5865f2"
           size="small"
           variant="flat"
-          @click="$store.commit('showModal'), $store.commit('setUserId', users.id)">Modify</v-btn></td>
+          @click="$store.commit('showModal'), $store.commit('setUserId', users.id), $store.dispatch('getUserData')">Modify</v-btn></td>
         <td><v-btn color="#5865f2"
           size="small"
           variant="flat">delete</v-btn></td>
