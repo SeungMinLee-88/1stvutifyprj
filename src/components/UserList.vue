@@ -20,12 +20,24 @@ alert('modifyPopup props.showModal : ' + props.showModal);
 
 emit('showModalPop', true);
 }
+/*   import { useStore } from 'vuex'
+const store = useStore()
+function increment () {
+  console.log("store : " + store)
+      store.commit('increment')
+    } */
+
   </script>
 <template>
-  {{props.userList}}
+<!--   {{props.userList}} -->
 <!--   page : {{props.page}}
   pageLength : {{props.pageLength}} -->
   showModal userList : {{showModal}}
+  <p>
+    <button @click="$store.commit('incrementB')">+</button>
+    <button @click="decrement">-</button>
+  </p>
+
   <v-table>
     <thead>
       <tr>
@@ -52,7 +64,7 @@ emit('showModalPop', true);
         <td><v-btn color="#5865f2"
           size="small"
           variant="flat"
-          @click="modifyPopup(users.id)">Modify</v-btn></td>
+          @click="$store.commit('showModal'), $store.commit('setUserId', users.id)">Modify</v-btn></td>
         <td><v-btn color="#5865f2"
           size="small"
           variant="flat">delete</v-btn></td>

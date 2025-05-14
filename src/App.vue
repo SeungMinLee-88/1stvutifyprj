@@ -14,11 +14,10 @@
       />
 
       <div id="app">
-  <p>{{ count }}</p>
-  <p>
-    <button @click="store.increment">+</button>
-    <button @click="store.decrement">-</button>
-  </p>
+        <div>
+  <p>store.state.showModalVal : {{ store.state.showModal }}</p>
+  <p>store.state.userId : {{ store.state.userId }}</p>
+</div>
 </div>
 
   </template>
@@ -30,17 +29,22 @@
 
 import MainComp from './components/MainComp.vue'
 import MyButton from './components/MyButton.vue'
-const foo = ref("test")
 
-const msg = ref('Hello World!')
+const resolve = () => {
+        console.log("actionA complete")
+      }
 const store = useStore()
 
+function increment () {
+      store.commit('increment')
+    }
+
+
   const page = ref(1)
-  const count = ref(1)
-  const showModal = ref(false)
+/*   const showModal = ref(false) */
   function showModalPop(showModalVal) {
     console.log("1st showModalVal :  "  + showModalVal)
-    showModal.value = showModalVal;
+    store.state.showModal = showModalVal;
 }
 
   const userList = ref([]);
@@ -52,7 +56,7 @@ const store = useStore()
 
 const getData = async () => {
 
-await Axios.get("http://localhost:8090/user/userList", {
+await Axios.get("http://localhost:8090/api/v1/user/userList", {
   params: {
         page: currentPage.value,
         size: "3",

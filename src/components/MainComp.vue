@@ -9,16 +9,17 @@
     <UserList :userList=userList
       :currentPage=currentPage
       :pageLength=pageLength
-      :showModal="showModal"
       @mainPageClick="mainPageClick"
       @showModalPop="showModalPop"
     />
     <ModifyModal
-    :showModal="showModal"/>
+    :showModal="$store.state.showModal"/>
 
   </v-card>
-  showModal : {{showModal}}
-  {{pageLength}}
+
+  <div>
+  <p>main showModal : {{ $store.state.showModal }}</p>
+</div>
   </div>
 </template>
 
@@ -37,12 +38,12 @@ emit('mainPageClick', pageVal);
 }
 
 const emit = defineEmits(['pageClick', 'selectFiled', 'inputSearch', 'showModalPop'])
-const showModalPop = (showModalVal) => {
+/* const showModalPop = (showModalVal) => {
     console.log("2nd showModalPop :  "  + showModalVal)
     emit('showModalPop', showModalVal);
     //getData();
   //alert('1')
-  }
+  } */
 
 
 const selectFiled = (selectSearchFiled) => {

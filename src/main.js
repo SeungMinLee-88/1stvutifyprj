@@ -7,7 +7,7 @@
 // Plugins
 import { registerPlugins } from '@/plugins'
 import { createVuetify } from 'vuetify'
-import Vuex from 'vuex'
+import { store } from './store/store'
 // Components
 import App from './App.vue'
 
@@ -26,5 +26,7 @@ const vuetify = createVuetify({
 })
 
 registerPlugins(app)
-app.use(vuetify).use(Vuex)
+app.use(vuetify)
+app.use(store)
 app.mount('#app')
+
