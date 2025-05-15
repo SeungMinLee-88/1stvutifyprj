@@ -12,12 +12,12 @@
       @mainPageClick="mainPageClick"
     />
     <ModifyModal
-    :showModal="$store.state.showModal"/>
+    :showModal="store.state.showModal"/>
 
   </v-card>
 
   <div>
-  <p>main showModal : {{ $store.state.showModal }}</p>
+  <p>main showModal : {{ store.state.showModal }}</p>
 </div>
   </div>
 </template>
@@ -30,6 +30,8 @@ import SearchBar from './SearchBar.vue'
 import UserList from './UserList.vue'
 import ModifyModal from './ModifyModal.vue'
 const items = [{title: 'Id', value: "loginId"}, {title: 'Name', value: "userName"}];
+import { useStore } from 'vuex'
+const store = useStore()
 
 function handleClick(pageVal) {
 console.log("pageVal : " + pageVal)

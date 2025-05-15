@@ -1,6 +1,8 @@
 <script setup>
   import { ref, onMounted, shallowRef  } from 'vue'
 
+  import { useStore } from 'vuex'
+const store = useStore()
 
 const props = defineProps(['userList', 'currentPage', 'pageLength', 'showModal'])
 
@@ -29,7 +31,7 @@ function increment () {
   pageLength : {{props.pageLength}} -->
   showModal userList : {{showModal}}
   <p>
-    <button @click="$store.commit('incrementB')">+</button>
+    <button @click="store.commit('incrementB')">+</button>
     <button @click="decrement">-</button>
   </p>
 
@@ -59,7 +61,7 @@ function increment () {
         <td><v-btn color="#5865f2"
           size="small"
           variant="flat"
-          @click="$store.commit('showModal'), $store.commit('setUserId', users.id), $store.dispatch('getUserData')">Modify</v-btn></td>
+          @click="store.commit('showModal'), store.commit('setUserId', users.id), store.dispatch('getUserData')">Modify</v-btn></td>
         <td><v-btn color="#5865f2"
           size="small"
           variant="flat">delete</v-btn></td>

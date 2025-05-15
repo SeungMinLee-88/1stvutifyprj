@@ -35,6 +35,10 @@ export const store = new Vuex.Store({
   setUserId (state, userId) {
     state.userId = userId
   }
+  ,
+  setRoleUser (state, filterRoleUser) {
+    state.userDetail.roleUser = filterRoleUser
+  }
   },
   actions: {
     async getUserData ({ state, commit }) {

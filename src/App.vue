@@ -30,6 +30,7 @@ import MainComp from './components/MainComp.vue'
 import MyButton from './components/MyButton.vue'
 
 const store = useStore()
+const parentMessage = ref()
 
 
 
