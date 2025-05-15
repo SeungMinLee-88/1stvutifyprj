@@ -14,7 +14,7 @@
 
       <div id="app">
         <div>
-  <p>store.state.showModalVal : {{ store.state.showModal }}</p>
+  <p>store.state.showModalVal : {{ store.state.showModifyModal }}</p>
 
 </div>
 </div>
@@ -35,10 +35,10 @@ const parentMessage = ref()
 
 
   const page = ref(1)
-/*   const showModal = ref(false) */
+/*   const showModifyModal = ref(false) */
   function showModalPop(showModalVal) {
     console.log("1st showModalVal :  "  + showModalVal)
-    store.state.showModal = showModalVal;
+    store.state.showModifyModal = showModalVal;
 }
 
   const userList = ref([]);
@@ -77,6 +77,7 @@ onMounted(() => {
   /* Promise.resolve(getData()).then((data) => (userList.value = data)); */
   getData();
   store.dispatch('getUserData')
+
   console.log("call onMounted");
 })
 

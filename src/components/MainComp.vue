@@ -12,12 +12,15 @@
       @mainPageClick="mainPageClick"
     />
     <ModifyModal
-    :showModal="store.state.showModal"/>
+    :showModifyModal="store.state.showModifyModal"/>
+
+    <RoleListModal
+    :showRoleListModal="store.state.showModifyModal"/>
 
   </v-card>
 
   <div>
-  <p>main showModal : {{ store.state.showModal }}</p>
+  <p>main showModifyModal : {{ store.state.showModifyModal }}</p>
 </div>
   </div>
 </template>
@@ -29,6 +32,7 @@ import { ref, onMounted, shallowRef  } from 'vue'
 import SearchBar from './SearchBar.vue'
 import UserList from './UserList.vue'
 import ModifyModal from './ModifyModal.vue'
+import RoleListModal from './RoleListModal.vue'
 const items = [{title: 'Id', value: "loginId"}, {title: 'Name', value: "userName"}];
 import { useStore } from 'vuex'
 const store = useStore()
@@ -75,7 +79,7 @@ const selectFiled = (selectSearchFiled) => {
 
 const page = ref(1)
 
-const props = defineProps(['userList', 'currentPage', 'pageLength', 'modelValue', 'searchFiled', 'searchTxt', 'showModal'])
+const props = defineProps(['userList', 'currentPage', 'pageLength', 'modelValue', 'searchFiled', 'searchTxt', 'showModifyModal'])
 /* const emit = defineEmits(['update:modelValue']) */
 
 </script>

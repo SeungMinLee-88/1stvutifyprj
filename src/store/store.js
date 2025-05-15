@@ -16,9 +16,12 @@ export const store = new Vuex.Store({
   state: {
       count: 0,
       count2: 10,
-      showModal: true,
+      showModifyModal: true,
+      showRoleListModal: false,
       userId: 0,
-      userDetail: []
+      userDetail: [],
+      exceptRoleList: [1, 2],
+      roleList: []
 
   },
   mutations: {
@@ -29,15 +32,26 @@ export const store = new Vuex.Store({
       state.count2++;
       console.log("after state.count : " + state.count)
   },
-    showModal (state) {
-      state.showModal = !state.showModal
+    showModifyModal (state) {
+      state.showModifyModal = !state.showModifyModal
   },
+  showRoleListModal (state) {
+    state.showRoleListModal = !state.showRoleListModal
+},
   setUserId (state, userId) {
     state.userId = userId
   }
   ,
+  setUserDetail (state, userDetails) {
+    state.userDetail = userDetails
+  }
+  ,
   setRoleUser (state, filterRoleUser) {
     state.userDetail.roleUser = filterRoleUser
+  },
+  setExceptRoleIds (state, exceptRoleIds) {
+    state.exceptRoleList = exceptRoleIds;
+    //Object.assign(state.userDetail.exceptRoleList, exceptRoleIds)
   }
   },
   actions: {
@@ -49,7 +63,17 @@ export const store = new Vuex.Store({
       }).then((response) => {
         console.log("getUserData : " + JSON.stringify(response.data));
 
-        state.userDetail = response.data;
+        commit("setUserDetail", response.data);
+      }).catch(function (error) {
+        console.log("error : " + error)
+      });
+    },
+    async getRoleList ({ state, commit }) {
+      console.log("state.exceptRoleList : " + JSON.stringify(state.exceptRoleList));
+      await Axios.post("http://localhost:8090/api/v1/user/roleList", state.exceptRoleList).then((response) => {
+        console.log("getRoleList : " + JSON.stringify(response.data));
+
+        state.roleList = response.data;
       }).catch(function (error) {
         console.log("error : " + error)
       });

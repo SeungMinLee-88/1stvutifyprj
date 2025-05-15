@@ -44,11 +44,22 @@ const roleFilter = ref([]);
 store.commit('setRoleUser', roleFilter.value.filter((n) => n.id !== parseInt(inputVal)))
 console.log("before roleUser : " + JSON.stringify(store.state.userDetail.roleUser))
 }
+function roleListModal() {
+  console.log("call roleListModal");
+  const exceptRoleIds = ref([]);
+  Object.assign(exceptRoleIds.value, store.state.userDetail.roleUser);
+  exceptRoleIds.value.map((excepts) =>{
+      console.log("excepts : " + excepts.id)
+  })
+  store.commit('setExceptRoleIds', exceptRoleIds.value)
+  store.dispatch('getRoleList')
+  store.commit('showRoleListModal')
+}
 
 </script>
 <template>
-  showModal ModifyModal : {{store.state.showModal}}
-  <v-overlay v-model="store.state.showModal" class="align-center justify-center" position="absolute" width="70%">
+  showModifyModal ModifyModal : {{store.state.showModifyModal}}
+  <v-overlay v-model="store.state.showModifyModal" class="align-center justify-center" position="absolute" width="70%">
         <v-card title="Dialog" height="700px">
           <v-card-text>
             <li>   : {{ valuesFilter }}</li>
@@ -71,6 +82,12 @@ ModifyModal Popup Page
           <v-icon icon="mdi-close" @click="handleRemove(role.roleId)"></v-icon>
         </template>
       </v-list-item>
+      <v-spacer></v-spacer>
+
+        <v-btn size="small"
+          variant="elevated"
+          @click="roleListModal"
+        >Add Roles</v-btn>
 
         <v-sheet class="mx-auto" width="300">
     <v-form fast-fail @submit.prevent>
@@ -92,14 +109,14 @@ ModifyModal Popup Page
     </v-form>
   </v-sheet>
 
-<v-btn size="small" variant="elevated" @click="store.commit('showModal')">닫기</v-btn>
+<v-btn size="small" variant="elevated" @click="store.commit('showModifyModal')">닫기</v-btn>
 </v-card-text>
 <v-card-actions>
         <v-spacer></v-spacer>
 
         <v-btn size="small"
           variant="elevated"
-          @click="store.commit('showModal')"
+          @click="store.commit('showModifyModal')"
         >Close</v-btn>
       </v-card-actions>
 </v-card>
