@@ -22,7 +22,8 @@ export const store = new Vuex.Store({
       userDetail: [],
       exceptRoleList: [1, 2],
       roleList: [],
-      updateRoleList: []
+      updateRoleList: [],
+      roleUserSave: []
 
   },
   mutations: {
@@ -45,6 +46,9 @@ export const store = new Vuex.Store({
   ,
   setUserDetail (state, userDetails) {
     state.userDetail = userDetails
+  },
+  setUserName (state, roleList) {
+    state.userDetail.userName = roleList
   }
   ,
   setRoleUser (state, filterRoleUser) {
@@ -63,8 +67,15 @@ export const store = new Vuex.Store({
   removeUpdateRoleList (state, updateRoleList) {
     state.updateRoleList.pop(updateRoleList)
   },
-  updateRoleUser (state, updateRoleList) {
-    state.userDetail.roleUser.push(updateRoleList)
+  updateRoleUser (state) {
+    state.userDetail.roleUser.push(state.updateRoleList[0])
+    //Object.assign(state.userDetail.roleUser, state.updateRoleList)
+  }
+
+  ,
+  setRoleUserSave (state, roleUserSave) {
+    state.roleUserSave = roleUserSave;
+    //Object.assign(state.userDetail.roleUser, state.updateRoleList)
   }
   ,
   },
@@ -91,7 +102,26 @@ export const store = new Vuex.Store({
       }).catch(function (error) {
         console.log("error : " + error)
       });
+    },
+    async userUpdate ({ state, commit }) {
+      console.log("state.exceptRoleList : " + JSON.stringify(state.exceptRoleList));
+      await Axios.post("http://localhost:8090/api/v1/user/userUpdate",
+        {
+          id: state.userDetail.id,
+          loginId: state.userDetail.loginId,
+          userName: state.userDetail.userName,
+          userPassword: state.userDetail.userPassword,
+          roleUserSave: stateroleUserSave
+      }
+      ).then((response) => {
+        console.log("getRoleList : " + JSON.stringify(response.data));
+
+        commit("setRoleList", response.data);
+      }).catch(function (error) {
+        console.log("error : " + error)
+      });
     }
+
 
   }
 });

@@ -6,6 +6,8 @@ const store = useStore()
 function handleInput(inputVal) {
 console.log("inputVal : " + inputVal)
 
+ store.commit('setUserName', inputVal);
+
 }
 
 
@@ -39,26 +41,41 @@ console.log("handleRemove inputVal : " + inputVal)
 const roleFilter = ref([]);
   //roleFilter.value = store.state.userDetail.roleUser;
   Object.assign(roleFilter.value, store.state.userDetail.roleUser);
-  console.log("before roleUser : " + JSON.stringify(store.state.userDetail.roleUser))
-  console.log("roleFilter.value.filter : " + roleFilter.value.filter((n) => n.id !== inputVal))
-store.commit('setRoleUser', roleFilter.value.filter((n) => n.id !== parseInt(inputVal)))
-console.log("before roleUser : " + JSON.stringify(store.state.userDetail.roleUser))
+  console.log("before roleUser : " + JSON.stringify(roleFilter.value.filter((n) => n.id !== parseInt(57))))
+  console.log("roleFilter.value.filter : " + JSON.stringify(roleFilter.value))
+store.commit('setRoleUser', roleFilter.value.filter((n) => n.roleId !== parseInt(inputVal)))
+console.log("after roleUser : " + JSON.stringify(store.state.userDetail.roleUser))
 }
 function roleListModal() {
   console.log("call roleListModal");
   const exceptRoleIds = ref([]);
 
   store.state.userDetail.roleUser.map((roles) =>{
-      console.log("roles.id : " + roles.id)
+      console.log("roles.id : " + roles.roleId)
       //Object.assign(exceptRoleIds.value, roles.id);
-      exceptRoleIds.value.push(roles.id)
+      exceptRoleIds.value.push(roles.roleId)
   })
   console.log("exceptRoleIds : " + JSON.stringify(exceptRoleIds.value))
   store.commit('setExceptRoleIds', exceptRoleIds.value)
   store.dispatch('getRoleList')
   store.commit('showRoleListModal')
 }
+function userUpdate(){
+  console.log("call roleListModal");
+  const roleUserSave = ref([]);
 
+  store.state.userDetail.roleUser.map((roles) =>{
+      console.log("roles.id : " + roles.roleId)
+      //Object.assign(exceptRoleIds.value, roles.id);
+      roleUserSave.value.push(roles.roleId)
+  })
+  console.log("roleUserSave : " + JSON.stringify(roleUserSave.value))
+
+  console.log("before store.state.userDetail : " + JSON.stringify(store.state.userDetail))
+  //store.commit('setRoleUserSave', roleUserSave.value)
+  console.log("after store.state.roleUserSave : " + JSON.stringify(store.state.roleUserSave))
+  store.dispatch('userUpdate')
+}
 </script>
 <template>
   showModifyModal ModifyModal : {{store.state.showModifyModal}}
@@ -108,7 +125,7 @@ ModifyModal Popup Page
             @update:model-value="handleInput"
       ></v-text-field>
 
-      <v-btn class="mt-2" type="submit" block>Submit</v-btn>
+      <v-btn class="mt-2" type="submit" @click="userUpdate" block>Submit</v-btn>
     </v-form>
   </v-sheet>
 

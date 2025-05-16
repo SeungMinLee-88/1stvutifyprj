@@ -20,10 +20,15 @@ function checkRoleList(selected, roles) {
   console.log("selected  "+ selected)
   console.log("roles  "+ JSON.stringify(roles))
   !selected ? store.commit('addUpdateRoleList', roles) : store.commit('removeUpdateRoleList', roles)
+  console.log("state.updateRoleList  "+ JSON.stringify(store.state.updateRoleList[0]))
 
 }
 
+function inputRoleList() {
+  store.commit('updateRoleUser')
+  store.commit('showRoleListModal')
 
+}
 
 </script>
 
@@ -57,7 +62,7 @@ function checkRoleList(selected, roles) {
         <v-spacer></v-spacer>
       <v-btn size="small"
           variant="elevated"
-          @click="roleListModal"
+          @click="inputRoleList"
         >Add Roles</v-btn>
       </v-card-actions>
   </v-card>
