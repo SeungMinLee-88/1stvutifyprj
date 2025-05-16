@@ -17,12 +17,13 @@ const filterValues = ref()
 
 filterValues.value = [{id : '0', value : 'a'}, {id : '1', value : 'b'}, {id : '2', value : 'c'}, {id : '3', value : 'd'}];
 
-const filterValuesTest = ref([{id : '0', value : 'a'}, {id : '1', value : 'b'}, {id : '2', value : 'c'}, {id : '3', value : 'd'}])
+/* const filterValuesTest = ref([{id : '0', value : 'a'}, {id : '1', value : 'b'}, {id : '2', value : 'c'}, {id : '3', value : 'd'}]) */
 
+const filterValuesTest = ref([{ "id": 60, "roleId": "1", "userId": "qqq", "roleName": "admin" }, { "id": 61, "roleId": "2", "userId": "qqq", "roleName": "manager" } ])
 
 const valuesFilter = computed(() => {
   console.log("filterValuesTest.value : " + filterValuesTest.value)
-  return filterValuesTest.value.filter((n) => n.id !== "2" && n.id !== "0")
+  return filterValuesTest.value.filter((n) => n.id !== 60)
   //return filterValuesTest.value
 })
 
@@ -41,22 +42,26 @@ console.log("handleRemove inputVal : " + inputVal)
 const roleFilter = ref([]);
   //roleFilter.value = store.state.userDetail.roleUser;
   Object.assign(roleFilter.value, store.state.userDetail.roleUser);
-  console.log("before roleUser : " + JSON.stringify(roleFilter.value.filter((n) => n.id !== parseInt(57))))
-  console.log("roleFilter.value.filter : " + JSON.stringify(roleFilter.value))
-store.commit('setRoleUser', roleFilter.value.filter((n) => n.roleId !== parseInt(inputVal)))
+  console.log("before roleUser : " + JSON.stringify(roleFilter.value.filter((n) => n.id !== parseInt(inputVal))))
+  console.log("chk roleFilter.value.filter : " + JSON.stringify(roleFilter.value.filter((n) => n.roleId !== inputVal)))
+store.commit('setRoleUser', roleFilter.value.filter((n) => n.roleId !== inputVal))
 console.log("after roleUser : " + JSON.stringify(store.state.userDetail.roleUser))
 }
 function roleListModal() {
   console.log("call roleListModal");
   const exceptRoleIds = ref([]);
 
-  store.state.userDetail.roleUser.map((roles) =>{
-      console.log("roles.id : " + roles.roleId)
-      //Object.assign(exceptRoleIds.value, roles.id);
-      exceptRoleIds.value.push(roles.roleId)
-  })
-  console.log("exceptRoleIds : " + JSON.stringify(exceptRoleIds.value))
-  store.commit('setExceptRoleIds', exceptRoleIds.value)
+  console.log("store.state.userDetail.roleUser length : " + store.state.userDetail.roleUser.length);
+  if(store.state.userDetail.roleUser.length != 0){
+    store.state.userDetail.roleUser.map((roles) =>{
+        console.log("roles.id : " + roles.roleId)
+        //Object.assign(exceptRoleIds.value, roles.id);
+        exceptRoleIds.value.push(roles.roleId)
+    })
+    console.log("exceptRoleIds : " + JSON.stringify(exceptRoleIds.value))
+    store.commit('setExceptRoleIds', exceptRoleIds.value)
+  }
+
   store.dispatch('getRoleList')
   store.commit('showRoleListModal')
 }
@@ -65,14 +70,14 @@ function userUpdate(){
   const roleUserSave = ref([]);
 
   store.state.userDetail.roleUser.map((roles) =>{
-      console.log("roles.id : " + roles.roleId)
+      console.log("userUpdate roles.id : " + roles.roleId)
       //Object.assign(exceptRoleIds.value, roles.id);
       roleUserSave.value.push(roles.roleId)
   })
   console.log("roleUserSave : " + JSON.stringify(roleUserSave.value))
 
   console.log("before store.state.userDetail : " + JSON.stringify(store.state.userDetail))
-  //store.commit('setRoleUserSave', roleUserSave.value)
+  store.commit('setRoleUserSave', roleUserSave.value)
   console.log("after store.state.roleUserSave : " + JSON.stringify(store.state.roleUserSave))
   store.dispatch('userUpdate')
 }
@@ -82,7 +87,7 @@ function userUpdate(){
   <v-overlay v-model="store.state.showModifyModal" class="align-center justify-center" position="absolute" width="70%">
         <v-card title="Dialog" height="700px">
           <v-card-text>
-            <li>   : {{ valuesFilter }}</li>
+            <li> valuesFilter  : {{ valuesFilter }}</li>
             <li>roleUserFilter : {{ roleUserFilter }}</li>
 ModifyModal Popup Page
 <p>store.state.userDetail : {{ store.state.userDetail }}</p>

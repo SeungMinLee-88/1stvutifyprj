@@ -20,11 +20,12 @@ function checkRoleList(selected, roles) {
   console.log("selected  "+ selected)
   console.log("roles  "+ JSON.stringify(roles))
   !selected ? store.commit('addUpdateRoleList', roles) : store.commit('removeUpdateRoleList', roles)
-  console.log("state.updateRoleList  "+ JSON.stringify(store.state.updateRoleList[0]))
+  console.log("state.updateRoleList  "+ JSON.stringify(store.state.updateRoleList))
 
 }
 
 function inputRoleList() {
+  console.log("inputRoleList  "+ JSON.stringify(store.state.updateRoleList))
   store.commit('updateRoleUser')
   store.commit('showRoleListModal')
 

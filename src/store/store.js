@@ -20,7 +20,7 @@ export const store = new Vuex.Store({
       showRoleListModal: false,
       userId: 0,
       userDetail: [],
-      exceptRoleList: [1, 2],
+      exceptRoleList: [0],
       roleList: [],
       updateRoleList: [],
       roleUserSave: []
@@ -68,7 +68,12 @@ export const store = new Vuex.Store({
     state.updateRoleList.pop(updateRoleList)
   },
   updateRoleUser (state) {
-    state.userDetail.roleUser.push(state.updateRoleList[0])
+    console.log("updateRoleUser  "+ JSON.stringify(store.state.updateRoleList[0]))
+    store.state.updateRoleList.map((roles) =>{
+      //Object.assign(exceptRoleIds.value, roles.id);
+      state.userDetail.roleUser.push(roles)
+  })
+
     //Object.assign(state.userDetail.roleUser, state.updateRoleList)
   }
 
@@ -104,14 +109,14 @@ export const store = new Vuex.Store({
       });
     },
     async userUpdate ({ state, commit }) {
-      console.log("state.exceptRoleList : " + JSON.stringify(state.exceptRoleList));
+      console.log("userUpdate state.userDetail : " + JSON.stringify(state.userDetail));
       await Axios.post("http://localhost:8090/api/v1/user/userUpdate",
         {
           id: state.userDetail.id,
           loginId: state.userDetail.loginId,
           userName: state.userDetail.userName,
           userPassword: state.userDetail.userPassword,
-          roleUserSave: stateroleUserSave
+          roleUserSave: state.roleUserSave
       }
       ).then((response) => {
         console.log("getRoleList : " + JSON.stringify(response.data));
