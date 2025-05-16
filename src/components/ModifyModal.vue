@@ -47,10 +47,13 @@ console.log("before roleUser : " + JSON.stringify(store.state.userDetail.roleUse
 function roleListModal() {
   console.log("call roleListModal");
   const exceptRoleIds = ref([]);
-  Object.assign(exceptRoleIds.value, store.state.userDetail.roleUser);
-  exceptRoleIds.value.map((excepts) =>{
-      console.log("excepts : " + excepts.id)
+
+  store.state.userDetail.roleUser.map((roles) =>{
+      console.log("roles.id : " + roles.id)
+      //Object.assign(exceptRoleIds.value, roles.id);
+      exceptRoleIds.value.push(roles.id)
   })
+  console.log("exceptRoleIds : " + JSON.stringify(exceptRoleIds.value))
   store.commit('setExceptRoleIds', exceptRoleIds.value)
   store.dispatch('getRoleList')
   store.commit('showRoleListModal')

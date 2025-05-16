@@ -21,7 +21,8 @@ export const store = new Vuex.Store({
       userId: 0,
       userDetail: [],
       exceptRoleList: [1, 2],
-      roleList: []
+      roleList: [],
+      updateRoleList: []
 
   },
   mutations: {
@@ -52,7 +53,20 @@ export const store = new Vuex.Store({
   setExceptRoleIds (state, exceptRoleIds) {
     state.exceptRoleList = exceptRoleIds;
     //Object.assign(state.userDetail.exceptRoleList, exceptRoleIds)
+  },
+  setRoleList (state, roleList) {
+    state.roleList = roleList
+  },
+  addUpdateRoleList (state, updateRoleList) {
+    state.updateRoleList.push(updateRoleList)
+  },
+  removeUpdateRoleList (state, updateRoleList) {
+    state.updateRoleList.pop(updateRoleList)
+  },
+  updateRoleUser (state, updateRoleList) {
+    state.userDetail.roleUser.push(updateRoleList)
   }
+  ,
   },
   actions: {
     async getUserData ({ state, commit }) {
@@ -73,7 +87,7 @@ export const store = new Vuex.Store({
       await Axios.post("http://localhost:8090/api/v1/user/roleList", state.exceptRoleList).then((response) => {
         console.log("getRoleList : " + JSON.stringify(response.data));
 
-        state.roleList = response.data;
+        commit("setRoleList", response.data);
       }).catch(function (error) {
         console.log("error : " + error)
       });
