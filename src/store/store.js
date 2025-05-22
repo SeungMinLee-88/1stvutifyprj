@@ -16,7 +16,7 @@ export const store = new Vuex.Store({
   state: {
       count: 0,
       count2: 10,
-      showModifyModal: true,
+      showModifyModal: false,
       showRoleListModal: false,
       userId: 0,
       userDetail: [],
@@ -67,6 +67,9 @@ export const store = new Vuex.Store({
   removeUpdateRoleList (state, updateRoleList) {
     state.updateRoleList.pop(updateRoleList)
   },
+  resetUpdateRoleList (state, updateRoleList) {
+    state.updateRoleList = [];
+  },
   updateRoleUser (state) {
     console.log("updateRoleUser  "+ JSON.stringify(store.state.updateRoleList[0]))
     store.state.updateRoleList.map((roles) =>{
@@ -86,9 +89,17 @@ export const store = new Vuex.Store({
   },
   actions: {
     async getUserData ({ state, commit }) {
-      await Axios.post("http://localhost:8090/api/v1/user/userDetail", {
+      await Axios.post("http://localhost:8090/api/v1/user/userDetail",
+      {
+        id: state.userId
+
+      },
+        {
           /* id: state.userId */
-          id: 2
+
+            headers: {
+            access: localStorage.getItem("access")
+            }
 
       }).then((response) => {
         console.log("getUserData : " + JSON.stringify(response.data));
@@ -100,7 +111,15 @@ export const store = new Vuex.Store({
     },
     async getRoleList ({ state, commit }) {
       console.log("state.exceptRoleList : " + JSON.stringify(state.exceptRoleList));
-      await Axios.post("http://localhost:8090/api/v1/user/roleList", state.exceptRoleList).then((response) => {
+      await Axios.post("http://localhost:8090/api/v1/user/roleList",
+      state.exceptRoleList,
+      {
+        headers: {
+          access: localStorage.getItem("access")
+          }
+      }
+
+    ).then((response) => {
         console.log("getRoleList : " + JSON.stringify(response.data));
 
         commit("setRoleList", response.data);
@@ -117,17 +136,45 @@ export const store = new Vuex.Store({
           userName: state.userDetail.userName,
           userPassword: state.userDetail.userPassword,
           roleUserSave: state.roleUserSave
+      },
+      {
+        headers: {
+          access: localStorage.getItem("access")
+          }
       }
       ).then((response) => {
         console.log("getRoleList : " + JSON.stringify(response.data));
-
+        console.log("getRoleList : " + JSON.stringify(response.status));
         commit("setRoleList", response.data);
+        if(response.status === 200)
+        {
+          alert("Update Success");
+          window.location.reload();
+        }
+
       }).catch(function (error) {
         console.log("error : " + error)
       });
-    }
+    },
+    async userDelete ({ state, commit }) {
+      await Axios.delete(`http://localhost:8090/api/v1/user/delete/${state.userId}`,
+        {
+          /* id: state.userId */
 
+            headers: {
+            access: localStorage.getItem("access")
+            }
 
+      }).then((response) => {
+        if(response.status === 200)
+          {
+            alert("Delete Success");
+            window.location.reload();
+          }
+      }).catch(function (error) {
+        console.log("error : " + error)
+      });
+    },
   }
 });
 

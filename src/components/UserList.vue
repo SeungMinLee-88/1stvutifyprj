@@ -12,9 +12,18 @@ const propPageLength = ref(props.pageLength);
 
 const emit = defineEmits(['mainPageClick', 'showModalPop'])
 
-function handleClick(pageVal) {
+function handlePageClick(pageVal) {
 console.log("pageVal : " + pageVal)
 emit('mainPageClick', pageVal);
+}
+
+function handleDeleteClick(usersId) {
+  if(confirm("Do you want Delete User?"))
+  {
+  console.log("usersId : " + usersId)
+  store.commit('setUserId', usersId)
+  store.dispatch('userDelete', usersId)
+  }
 }
 
 /*   import { useStore } from 'vuex'
@@ -26,14 +35,7 @@ function increment () {
 
   </script>
 <template>
-<!--   {{props.userList}} -->
-<!--   page : {{props.page}}
-  pageLength : {{props.pageLength}} -->
-  showModal userList : {{showModal}}
-  <p>
-    <button @click="store.commit('incrementB')">+</button>
-    <button @click="decrement">-</button>
-  </p>
+
 
   <v-table>
     <thead>
@@ -61,10 +63,10 @@ function increment () {
         <td><v-btn color="#5865f2"
           size="small"
           variant="flat"
-          @click="store.commit('showModal'), store.commit('setUserId', users.id), store.dispatch('getUserData')">Modify</v-btn></td>
+          @click="store.commit('showModifyModal'), store.commit('setUserId', users.id), store.dispatch('getUserData')">Modify</v-btn></td>
         <td><v-btn color="#5865f2"
           size="small"
-          variant="flat">delete</v-btn></td>
+          variant="flat" @click="handleDeleteClick(users.id)">delete</v-btn></td>
       </tr>
     </tbody>
     </v-table>
@@ -73,7 +75,7 @@ function increment () {
         v-model="props.currentPage"
         :length="props.pageLength"
         rounded="circle"
-        @update:model-value="handleClick"
+        @update:model-value="handlePageClick"
       ></v-pagination>
 
   </template>

@@ -36,8 +36,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, shallowRef  } from 'vue'
-const emit = defineEmits(['pageClick', 'selectFiled', 'inputSearch'])
+import { shallowRef  } from 'vue'
+const emit = defineEmits(['pageClick', 'selectFiled', 'inputSearch', 'mainPageClick'])
 
 const model = shallowRef('')
 const items = [{title: 'Id', value: "loginId"}, {title: 'Name', value: "userName"}];
@@ -55,6 +55,7 @@ const selectFiled = (selectSearchFiled) => {
   const userSearch = () => {
     console.log("3rd userSearch :  ")
     emit('userSearch');
+    emit('mainPageClick', 1);
   }
 
 </script>

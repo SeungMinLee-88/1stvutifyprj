@@ -65,6 +65,7 @@ function inputRoleList() {
           variant="elevated"
           @click="inputRoleList"
         >Add Roles</v-btn>
+        <v-btn size="small" variant="elevated" @click="store.commit('resetUpdateRoleList') ,store.commit('showRoleListModal')">닫기</v-btn>
       </v-card-actions>
   </v-card>
 </v-overlay>
