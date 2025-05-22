@@ -27,8 +27,6 @@
 
 <script setup>
 
-import { ref } from 'vue'
-
 import SearchBar from './SearchBar.vue'
 import UserList from './UserList.vue'
 import ModifyModal from './ModifyModal.vue'
@@ -39,25 +37,19 @@ const store = useStore()
 const emit = defineEmits(['pageClick', 'selectFiled', 'inputSearch', 'showModalPop'])
 
 const selectFiled = (selectSearchFiled) => {
-    console.log("2nd selectSearchFiled :  "  + selectSearchFiled)
-    emit('selectFiled', selectSearchFiled);
-  }
+  emit('selectFiled', selectSearchFiled);
+}
 
-  const inputSearch = (inputSearch) => {
-    console.log("2nd inputSearch :  "  + inputSearch)
-    emit('inputSearch', inputSearch);
-  }
-  const mainPageClick = (pageVal) => {
-    console.log("2nd pageVal :  "  + pageVal)
-    emit('pageClick', pageVal);
-  }
-  const userSearch = () => {
-    console.log("2nd userSearch")
-    emit('userSearch');
+const inputSearch = (inputSearch) => {
+  emit('inputSearch', inputSearch);
+}
+const mainPageClick = (pageVal) => {
+  emit('pageClick', pageVal);
+}
+const userSearch = () => {
+  emit('userSearch');
 
-  }
-
-const page = ref(1)
+}
 
 const props = defineProps(['userList', 'currentPage', 'pageLength', 'modelValue', 'searchFiled', 'searchTxt', 'showModifyModal'])
 /* const emit = defineEmits(['update:modelValue']) */

@@ -1,42 +1,25 @@
 <script setup>
-  import { ref, onMounted, shallowRef  } from 'vue'
 
-  import { useStore } from 'vuex'
+import { useStore } from 'vuex'
 const store = useStore()
 
 const props = defineProps(['userList', 'currentPage', 'pageLength', 'showModal'])
-
-const propPage = ref(props.currentPage);
-const propPageLength = ref(props.pageLength);
-
-
 const emit = defineEmits(['mainPageClick', 'showModalPop'])
-
 function handlePageClick(pageVal) {
-console.log("pageVal : " + pageVal)
-emit('mainPageClick', pageVal);
+  emit('mainPageClick', pageVal);
 }
 
 function handleDeleteClick(usersId) {
   if(confirm("Do you want Delete User?"))
   {
-  console.log("usersId : " + usersId)
-  store.commit('setUserId', usersId)
-  store.dispatch('userDelete', usersId)
+    store.commit('setUserId', usersId)
+    store.dispatch('userDelete', usersId)
   }
 }
 
-/*   import { useStore } from 'vuex'
-const store = useStore()
-function increment () {
-  console.log("store : " + store)
-      store.commit('increment')
-    } */
 
-  </script>
+</script>
 <template>
-
-
   <v-table>
     <thead>
       <tr>
